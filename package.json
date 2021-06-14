@@ -1,6 +1,6 @@
 {
     "name": "hubspot-unopinionated-api",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Light weight hubspot unopinionated api client to build request.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
