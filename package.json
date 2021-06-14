@@ -23,5 +23,12 @@
     "repository": {
         "type": "git",
         "url": "git+https://github.com/madanlimbu/hubspot-unopinionated-api.git"
-    }
+    },
+    "keywords": [
+        "hubspot",
+        "api",
+        "client",
+        "lightweight",
+        "serverless"
+    ]
 }
