@@ -1,7 +1,7 @@
 {
-    "name": "hubspot-api-client",
+    "name": "hubspot-unopinionated-api",
     "version": "1.0.0",
-    "description": "Light weight hubspot v3 api client",
+    "description": "Light weight hubspot unopinionated api client to build request.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
@@ -22,6 +22,6 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/madanlimbu/hubspot-api-client.git"
+        "url": "git+https://github.com/madanlimbu/hubspot-unopinionated-api.git"
     }
 }
