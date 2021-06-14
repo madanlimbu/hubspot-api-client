@@ -6,7 +6,7 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "watch": "webpack --watch --mode development",
-        "prepublish": "tsc"
+        "prepare": "tsc"
     },
     "author": "madanlimbu",
     "license": "MIT",
