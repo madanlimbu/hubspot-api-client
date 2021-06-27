@@ -9,6 +9,9 @@ export interface HubspotObjectApiInterface {
   batchReadObject<T>(
     param: HubspotRequestType<Query.HubspotObjectBatchReadRequest>
   ): Promise<Query.HubspotObjectBatchReadResponse<T>>;
+  batchUpdateObject<T>(
+    param: HubspotRequestType<Query.HubspotObjectBatchUpdateRequest>
+  ): Promise<Query.HubspotObjectBatchUpdateResponse<T>>;
   updateObjectById<T>(
     param: HubspotRequestType<Query.HubpostUpdateObjectRequest>
   ): Promise<Query.HubspotUpdateObjectResponse<T>>;
@@ -21,6 +24,7 @@ export function HubspotObjectApi(config: ApiConfig): HubspotObjectApiInterface {
   return {
     getObjectById: (param) => axios(Query.queryReadObjectById(config, param)).then((res) => res.data),
     batchReadObject: (param) => axios(Query.queryBatchRead(config, param)).then((res) => res.data),
+    batchUpdateObject: (param) => axios(Query.queryBatchUpdateObject(config, param)).then((res) => res.data),
     updateObjectById: (param) => axios(Query.queryUpdateObjectById(config, param)).then((res) => res.data),
     searchObjects: (param) => axios(Query.querySearchObject(config, param)).then((res) => res.data),
   };

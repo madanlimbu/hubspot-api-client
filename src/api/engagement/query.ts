@@ -3,7 +3,7 @@ import { Query, RequestParam } from '../Interface';
 /***************** Request Type *****************/
 
 export interface EngagementByIdRequest extends RequestParam {
-  pathParam: {
+  pathParams: {
     engagementId: string;
   };
 }
@@ -37,7 +37,7 @@ type QueryGetEngagementById = Query<EngagementByIdRequest>;
  */
 export const queryEngagementById: QueryGetEngagementById = (config, arg) => {
   const { params, customAxiosConfig } = arg;
-  const url = `https://api.hubspot.com/engagements/v1/engagements/${params.pathParam.engagementId}?hapikey=${config.api_key}`;
+  const url = `https://api.hubspot.com/engagements/v1/engagements/${params.pathParams.engagementId}?hapikey=${config.api_key}`;
   const options = {
     url,
     method: <const>'GET',

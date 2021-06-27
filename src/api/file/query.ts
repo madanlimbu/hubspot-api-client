@@ -3,16 +3,16 @@ import { Query, RequestParam } from '../Interface';
 /***************** Request Type *****************/
 
 export interface FileByIdRequest extends RequestParam {
-  pathParam: {
+  pathParams: {
     fileId: number | string;
   };
 }
 
 export interface FileSignedUrlRequest extends RequestParam {
-  pathParam: {
+  pathParams: {
     fileId: number | string;
   };
-  queryParam?: {
+  queryParams?: {
     size?: 'thumb' | 'icon' | 'medium' | 'preview';
     expirationSeconds?: number;
   };
@@ -59,7 +59,7 @@ type QueryGetFileSignedUrlById = Query<FileSignedUrlRequest>;
  * @param FileByIdRequest
  */
 export const queryFileById: QueryGetFileById = (config, arg) => {
-  const url = `https://api.hubspot.com/files/v3/files/${arg.params.pathParam.fileId}/?hapikey=${config.api_key}`;
+  const url = `https://api.hubspot.com/files/v3/files/${arg.params.pathParams.fileId}/?hapikey=${config.api_key}`;
   const options = {
     url,
     method: <const>'GET',
@@ -74,12 +74,12 @@ export const queryFileById: QueryGetFileById = (config, arg) => {
  * @param FileByIdRequest
  */
 export const queryGetFileSignedUrlById: QueryGetFileSignedUrlById = (config, arg) => {
-  const { pathParam, queryParam } = arg.params;
-  const url = `https://api.hubspot.com/files/v3/files/${pathParam.fileId}/signed-url?hapikey=${config.api_key}`;
+  const { pathParams, queryParams } = arg.params;
+  const url = `https://api.hubspot.com/files/v3/files/${pathParams.fileId}/signed-url?hapikey=${config.api_key}`;
   const options = {
     url,
     method: <const>'GET',
-    params: queryParam,
+    params: queryParams,
   };
   return { ...options, ...arg.customAxiosConfig };
 };

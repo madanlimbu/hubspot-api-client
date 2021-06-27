@@ -3,12 +3,12 @@ import { BatchStatus, Query, RequestParam } from '../Interface';
 /***************** Request Type *****************/
 
 export interface AssociationsBatchReadRequest extends RequestParam {
-  bodyParam: {
+  bodyParams: {
     inputs: {
       id: string;
     }[];
   };
-  pathParam: {
+  pathParams: {
     fromObjectType: string;
     toObjectType: string;
   };
@@ -49,12 +49,12 @@ type QueryBatchReadAssociations = Query<AssociationsBatchReadRequest>;
  * @param AssociationsBatchReadRequest
  */
 export const queryBatchRead: QueryBatchReadAssociations = (config, { params, customAxiosConfig }) => {
-  const { fromObjectType, toObjectType } = params.pathParam;
+  const { fromObjectType, toObjectType } = params.pathParams;
   const url = `https://api.hubspot.com/crm/v3/associations/${fromObjectType}/${toObjectType}/batch/read?hapikey=${config.api_key}`;
   const options = {
     url,
     method: <const>'POST',
-    data: params.bodyParam,
+    data: params.bodyParams,
   };
   return { ...options, ...customAxiosConfig };
 };

@@ -1,6 +1,7 @@
-import { FilterOperator, Query, RequestParam } from '../Interface';
+import { FilterOperator, Query, RequestParam, SORTS_TYPE } from '../Interface';
 
 export type HubspotObjectType = 'contact' | 'contacts' | 'company' | 'companies' | 'deal' | 'deals';
+export type HubspotDealStages = 'contractsent' | 'appointmentscheduled' | 'closedwon';
 
 export interface ObjectResponseType<T> {
   id: string;
@@ -41,6 +42,18 @@ export interface HubspotObjectBatchReadRequest extends RequestParam {
   };
 }
 
+export interface HubspotObjectBatchUpdateRequest extends RequestParam {
+  pathParams: {
+    objectType: string | HubspotObjectType;
+  };
+  bodyParams: {
+    inputs: {
+      id: string;
+      properties: { [key: string]: string | number };
+    }[];
+  };
+}
+
 // Request param to update object.
 export interface HubpostUpdateObjectRequest extends RequestParam {
   bodyParams?: {
@@ -65,7 +78,10 @@ export interface HubspotObjectSearchRequest extends RequestParam {
         operator: FilterOperator;
       }[];
     }[];
-    sorts?: string[];
+    sorts?: {
+      propertyName: string;
+      direction: SORTS_TYPE;
+    }[];
     properties?: string[];
     limit: number;
     after: number;
@@ -88,8 +104,16 @@ export interface HubspotObjectBatchReadResponse<T> {
   results: ObjectResponseType<T>[];
 }
 
+// Response batch update of objects.
+export interface HubspotObjectBatchUpdateResponse<T> {
+  status: string;
+  results: ObjectResponseType<T>[];
+}
+
 // Response Update Object
 export interface HubspotUpdateObjectResponse<T> {
+  createdAt: string;
+  updatedAt: string;
   id: string;
   properties: T;
 }
@@ -115,6 +139,7 @@ export interface HubspotObjectSearchResponse<T> {
 // Query generators for Axios.
 type QueryReadObjectByIdType = Query<HubspotReadObjectByIdRequest>;
 type QueryBatchReadObject = Query<HubspotObjectBatchReadRequest>;
+type QueryBatchUpdateObject = Query<HubspotObjectBatchUpdateRequest>;
 type QueryUpdateObjectById = Query<HubpostUpdateObjectRequest>;
 type QuerySearchObject = Query<HubspotObjectSearchRequest>;
 
@@ -154,6 +179,25 @@ export const queryReadObjectById: QueryReadObjectByIdType = (config, arg) => {
 };
 
 /**
+ * Update a batch of objects.
+ * Perform a partial upate on a batch of objects. This follows the same rules as performing partial updates on an individual object.
+ *
+ * @param config
+ * @param arg
+ * @constructor
+ */
+export const queryBatchUpdateObject: QueryBatchUpdateObject = (config, arg) => {
+  const { pathParams, bodyParams } = arg.params;
+  const url = `https://api.hubspot.com/crm/v3/objects/${pathParams.objectType}/batch/update?hapikey=${config.api_key}`;
+  const options = {
+    url,
+    method: <const>'POST',
+    data: bodyParams,
+  };
+  return { ...options, ...arg.customAxiosConfig };
+};
+
+/**
  * Update Object by object id.
  *
  * @param config
@@ -176,7 +220,6 @@ export const queryUpdateObjectById: QueryUpdateObjectById = (config, arg) => {
  * @param arg
  */
 export const querySearchObject: QuerySearchObject = (config, arg) => {
-  console.log(`It is creating param`);
   const { pathParams, bodyParams } = arg.params;
   const url = `https://api.hubspot.com/crm/v3/objects/${pathParams.objectType}/search?hapikey=${config.api_key}`;
   const options = {

@@ -3,6 +3,7 @@ import { HubspotAssociationApiInterface } from './association/api';
 import { HubspotEngagementApiInterface } from './engagement/api';
 import { HubspotFileApiInterface } from './file/api';
 import { HubspotObjectApiInterface } from './object/api';
+import { HubspotHubdbApiInterface } from './hubdb/api';
 
 export type FilterOperator =
   | 'EQ'
@@ -16,10 +17,14 @@ export type FilterOperator =
   | 'CONTAINS_TOKEN'
   | 'NOT_CONTAINS_TOKEN';
 
+export type HubdbV2FilterOperator = 'eq' | 'ne';
+
+export type SORTS_TYPE = 'DESCENDING' | 'ASCENDING';
+
 export interface RequestParam {
-  pathParam?: any;
-  queryParam?: any;
-  bodyParam?: any;
+  pathParams?: any;
+  queryParams?: any;
+  bodyParams?: any;
 }
 
 export interface HubspotRequestType<T extends RequestParam> {
@@ -42,4 +47,5 @@ export interface HubspotClientApiInterface {
   association: HubspotAssociationApiInterface;
   engagement: HubspotEngagementApiInterface;
   file: HubspotFileApiInterface;
+  hubdb: HubspotHubdbApiInterface;
 }
